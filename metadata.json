@@ -1,0 +1,6 @@
+{
+  "name": "AgriCool",
+  "description": "AI-powered cold-chain intelligence platform for farmers and cold storage operators",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
