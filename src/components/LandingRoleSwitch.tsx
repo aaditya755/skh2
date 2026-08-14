@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Warehouse, Package, ArrowRight, ShieldCheck, Sparkles, Thermometer, ChevronRight, HelpCircle, Bot, MessageCircle } from 'lucide-react';
+import { Warehouse, Package, Landmark, ChevronRight, HelpCircle, Bot } from 'lucide-react';
 import { Role } from '../types';
 import { AgriCoolAiChatbotModal } from './AgriCoolAiChatbotModal';
 
@@ -15,6 +15,7 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
       {/* Decorative background blur shapes */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#BBD38B]/20 rounded-full filter blur-3xl -z-0"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#95B1EE]/20 rounded-full filter blur-3xl -z-0"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#EFD17F]/20 rounded-full filter blur-3xl -z-0"></div>
 
       {/* Brand Header */}
       <header className="max-w-6xl mx-auto w-full flex items-center justify-between z-10">
@@ -45,27 +46,27 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
       </header>
 
       {/* Hero Section */}
-      <main className="max-w-4xl mx-auto w-full my-auto py-8 space-y-10 z-10">
+      <main className="max-w-6xl mx-auto w-full my-auto py-8 space-y-10 z-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A2D27] tracking-tight leading-tight">
             Select Your Portal
           </h2>
           <p className="text-sm text-[#5C736A] font-medium">
-            Choose your role to access cold-chain monitoring, harvest registration, or storage zone management.
+            Choose your role to access cold-chain monitoring, harvest registration, storage management, or district oversight.
           </p>
         </div>
 
-        {/* Two Portal Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Three Portal Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Farmer Portal Card */}
           <button
             onClick={() => onSelectRole('farmer')}
-            className="bg-[#F4F6F4] border-2 border-[#E2E9E2] hover:border-[#0C3830] p-8 rounded-3xl text-left transition-all duration-300 hover:scale-[1.02] shadow-xs hover:shadow-xl flex flex-col justify-between group cursor-pointer"
+            className="bg-[#F4F6F4] border-2 border-[#E2E9E2] hover:border-[#0C3830] p-6 sm:p-7 rounded-3xl text-left transition-all duration-300 hover:scale-[1.02] shadow-xs hover:shadow-xl flex flex-col justify-between group cursor-pointer"
           >
             <div className="space-y-5">
               <div className="flex justify-between items-start">
-                <div className="bg-[#0C3830] text-[#DCEBBA] p-4 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
-                  <Package size={32} />
+                <div className="bg-[#0C3830] text-[#DCEBBA] p-3.5 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
+                  <Package size={28} />
                 </div>
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#0C3830] bg-[#DCEBBA] px-3 py-1 rounded-full">
                   Farmers
@@ -73,7 +74,7 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-2xl font-extrabold text-[#1A2D27] group-hover:text-[#0C3830] transition-colors">
+                <h3 className="text-xl font-extrabold text-[#1A2D27] group-hover:text-[#0C3830] transition-colors">
                   Farmer Portal
                 </h3>
                 <p className="text-xs text-[#5C736A] leading-relaxed">
@@ -82,10 +83,10 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
               </div>
             </div>
 
-            <div className="mt-8 pt-4 flex items-center justify-between font-extrabold text-sm text-[#0C3830]">
+            <div className="mt-8 pt-4 flex items-center justify-between font-extrabold text-sm text-[#0C3830] border-t border-gray-200/60">
               <span>Continue as Farmer</span>
-              <div className="p-2 bg-[#0C3830] text-white rounded-xl group-hover:translate-x-1 transition-transform">
-                <ChevronRight size={18} />
+              <div className="p-2 bg-[#0C3830] text-[#DCEBBA] rounded-xl group-hover:translate-x-1 transition-transform">
+                <ChevronRight size={16} />
               </div>
             </div>
           </button>
@@ -93,32 +94,65 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
           {/* Storage Operator Portal Card */}
           <button
             onClick={() => onSelectRole('storage')}
-            className="bg-white border-2 border-[#E2E9E2] hover:border-[#364C84] p-8 rounded-3xl text-left transition-all duration-300 hover:scale-[1.02] shadow-xs hover:shadow-xl flex flex-col justify-between group cursor-pointer"
+            className="bg-white border-2 border-[#E2E9E2] hover:border-[#364C84] p-6 sm:p-7 rounded-3xl text-left transition-all duration-300 hover:scale-[1.02] shadow-xs hover:shadow-xl flex flex-col justify-between group cursor-pointer"
           >
             <div className="space-y-5">
               <div className="flex justify-between items-start">
-                <div className="bg-[#364C84] text-[#95B1EE] p-4 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
-                  <Warehouse size={32} />
+                <div className="bg-[#364C84] text-[#95B1EE] p-3.5 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
+                  <Warehouse size={28} />
                 </div>
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#364C84] bg-[#95B1EE]/20 px-3 py-1 rounded-full">
-                  Storage Operators
+                  Storage Owners
                 </span>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-2xl font-extrabold text-[#1A2D27] group-hover:text-[#364C84] transition-colors">
+                <h3 className="text-xl font-extrabold text-[#1A2D27] group-hover:text-[#364C84] transition-colors">
                   Storage Owner Portal
                 </h3>
                 <p className="text-xs text-[#5C736A] leading-relaxed">
-                  Monitor temperature zones, view IoT sensor telemetry, and manage farmer booking requests.
+                  Monitor temperature zones, view IoT sensor telemetry, track reefer fleet, and manage farmer bookings.
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 pt-4 flex items-center justify-between font-extrabold text-sm text-[#364C84]">
+            <div className="mt-8 pt-4 flex items-center justify-between font-extrabold text-sm text-[#364C84] border-t border-gray-200/60">
               <span>Continue as Storage Owner</span>
-              <div className="p-2 bg-[#364C84] text-white rounded-xl group-hover:translate-x-1 transition-transform">
-                <ChevronRight size={18} />
+              <div className="p-2 bg-[#364C84] text-[#95B1EE] rounded-xl group-hover:translate-x-1 transition-transform">
+                <ChevronRight size={16} />
+              </div>
+            </div>
+          </button>
+
+          {/* Government & Regulator Portal Card - Updated to Warm Gold/Wheat Theme #EFD17F & #3A2E1F */}
+          <button
+            onClick={() => onSelectRole('government')}
+            className="bg-white border-2 border-[#EADDC0] hover:border-[#EFD17F] p-6 sm:p-7 rounded-3xl text-left transition-all duration-300 hover:scale-[1.02] shadow-xs hover:shadow-xl flex flex-col justify-between group cursor-pointer"
+          >
+            <div className="space-y-5">
+              <div className="flex justify-between items-start">
+                <div className="bg-[#3A2E1F] text-[#EFD17F] p-3.5 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
+                  <Landmark size={28} />
+                </div>
+                <span className="text-xs font-extrabold uppercase tracking-wider text-[#3A2E1F] bg-[#EFD17F] px-3 py-1 rounded-full">
+                  Govt & Regulators
+                </span>
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="text-xl font-extrabold text-[#1A2D27] group-hover:text-[#3A2E1F] transition-colors">
+                  Government & Policy
+                </h3>
+                <p className="text-xs text-[#5C736A] leading-relaxed">
+                  District cold capacity tracking, food loss prevention audits, subsidy disbursals, and compliance oversight.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 flex items-center justify-between font-extrabold text-sm text-[#3A2E1F] border-t border-[#EADDC0]">
+              <span>Continue as Govt Official</span>
+              <div className="p-2 bg-[#3A2E1F] text-[#EFD17F] rounded-xl group-hover:translate-x-1 transition-transform">
+                <ChevronRight size={16} />
               </div>
             </div>
           </button>
@@ -142,11 +176,6 @@ export const LandingRoleSwitch: React.FC<LandingRoleSwitchProps> = ({ onSelectRo
         onClose={() => setIsFaqOpen(false)}
         lang="en"
       />
-
-      {/* Footer */}
-      <footer className="max-w-6xl mx-auto w-full text-center text-xs text-gray-400 py-4 z-10">
-        © 2026 AgriCool • Cold-Chain Intelligence & Produce Spoilage Prevention
-      </footer>
     </div>
   );
 };

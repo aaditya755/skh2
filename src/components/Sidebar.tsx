@@ -13,7 +13,13 @@ import {
   X,
   Bell,
   FileText,
+  Truck,
   LogOut,
+  Building2,
+  TrendingUp,
+  Award,
+  ShieldCheck,
+  Landmark,
 } from 'lucide-react';
 import { Role, Language } from '../types';
 import { translations } from '../i18n/translations';
@@ -45,8 +51,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const t = translations[lang];
   const isFarmer = role === 'farmer';
+  const isGovernment = role === 'government';
+  const isStorage = role === 'storage';
 
-  const sidebarBg = isFarmer ? 'bg-[#0C3830]' : 'bg-[#123E5E]';
+  // Role-specific theme colors
+  let sidebarBg = 'bg-[#123E5E]';
+  let accentBg = 'bg-[#95B1EE]';
+  let accentText = 'text-[#123E5E]';
+  let iconAccent = 'text-[#95B1EE]';
+  let brandSub = 'Storage Ops';
+  let userInitials = 'SB';
+  let userName = 'Sahil Bhonsle';
+  let userRoleLabel = 'Cold Storage Owner';
+
+  if (isFarmer) {
+    sidebarBg = 'bg-[#0C3830]';
+    accentBg = 'bg-[#DCEBBA]';
+    accentText = 'text-[#0C3830]';
+    iconAccent = 'text-[#DCEBBA]';
+    brandSub = 'Farmer Portal';
+    userInitials = 'RK';
+    userName = 'Rajesh Kadam';
+    userRoleLabel = 'Edit Profile & Mobile #';
+  } else if (isGovernment) {
+    sidebarBg = 'bg-[#3A2E1F]';
+    accentBg = 'bg-[#EFD17F]';
+    accentText = 'text-[#3A2E1F]';
+    iconAccent = 'text-[#EFD17F]';
+    brandSub = 'Regulator Portal';
+    userInitials = 'AK';
+    userName = 'Dr. Anand Kulkarni';
+    userRoleLabel = 'District Agri Officer';
+  }
 
   interface NavItem {
     id: string;
@@ -60,6 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'batches', label: t.nav.batches, icon: Package },
     { id: 'register', label: t.nav.registerHarvest, icon: PlusCircle },
     { id: 'storage', label: t.nav.findStorage, icon: MapPin },
+    { id: 'logistics', label: t.nav.logistics, icon: Truck },
     { id: 'alerts', label: t.nav.alerts, icon: Bell, badge: criticalAlertsCount },
     { id: 'history', label: t.nav.history, icon: FileText },
     { id: 'ai-advisor', label: t.nav.aiAdvisor, icon: Sparkles },
@@ -69,12 +106,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
     { id: 'sensors', label: t.nav.analytics, icon: Thermometer },
     { id: 'zones', label: t.nav.zoneManagement, icon: Layers },
+    { id: 'logistics', label: t.nav.logistics, icon: Truck },
     { id: 'requests', label: t.nav.requests, icon: Inbox, badge: pendingRequestsCount },
     { id: 'alerts', label: t.nav.alerts, icon: Bell, badge: criticalAlertsCount },
     { id: 'inventory', label: t.nav.inventory, icon: Database },
   ];
 
-  const navItems = isFarmer ? farmerNavItems : storageNavItems;
+  const governmentNavItems: NavItem[] = [
+    { id: 'dashboard', label: 'District Overview', icon: LayoutDashboard },
+    { id: 'facilities', label: 'Storage Grid & Audits', icon: Building2 },
+    { id: 'logistics', label: 'Regional Transit Fleet', icon: Truck },
+    { id: 'alerts', label: 'Compliance & Breaches', icon: Bell, badge: criticalAlertsCount },
+    { id: 'subsidies', label: 'PMKSY & Subsidies', icon: Award },
+    { id: 'mandi', label: 'Mandi Price Index', icon: TrendingUp },
+  ];
+
+  let navItems = storageNavItems;
+  if (isFarmer) {
+    navItems = farmerNavItems;
+  } else if (isGovernment) {
+    navItems = governmentNavItems;
+  }
 
   return (
     <>
@@ -95,16 +147,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Brand Header */}
         <div className="h-20 px-4 flex items-center justify-between border-b border-white/10">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-11 h-11 rounded-2xl bg-[#DCEBBA] text-[#0C3830] flex items-center justify-center font-black text-xl shadow-md shrink-0">
-              <Warehouse size={22} />
+            <div className={`w-11 h-11 rounded-2xl ${accentBg} ${accentText} flex items-center justify-center font-black text-xl shadow-md shrink-0`}>
+              {isGovernment ? <Landmark size={22} /> : <Warehouse size={22} />}
             </div>
             {isOpen && (
               <div className="flex flex-col">
                 <span className="font-extrabold text-xl tracking-tight leading-none text-white">
                   AgriCool
                 </span>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest mt-1 text-[#DCEBBA]">
-                  {isFarmer ? 'Farmer Portal' : 'Storage Ops'}
+                <span className={`text-[10px] font-extrabold uppercase tracking-widest mt-1 ${iconAccent}`}>
+                  {brandSub}
                 </span>
               </div>
             )}
@@ -128,13 +180,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={item.id}
+                id={`nav-item-${item.id}`}
                 onClick={() => {
                   onTabChange(item.id);
                   if (window.innerWidth < 1024) onToggle();
                 }}
                 className={`w-full flex items-center gap-3 px-3.5 py-3.5 rounded-2xl font-bold text-sm transition-all relative group ${
                   isActive
-                    ? 'bg-[#DCEBBA] text-[#0C3830] shadow-md'
+                    ? `${accentBg} ${accentText} shadow-md`
                     : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
                 title={item.label}
@@ -142,17 +195,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <Icon
                   size={20}
                   className={`shrink-0 transition-transform group-hover:scale-110 ${
-                    isActive ? 'text-[#0C3830]' : 'text-[#DCEBBA]'
+                    isActive ? accentText : iconAccent
                   }`}
                 />
 
                 {isOpen && <span className="truncate">{item.label}</span>}
 
                 {/* Badge count if present */}
-                {item.badge && item.badge > 0 && (
+                {item.badge !== undefined && item.badge > 0 && (
                   <span
                     className={`ml-auto px-2 py-0.5 rounded-full text-[11px] font-extrabold ${
-                      isActive ? 'bg-[#0C3830] text-white' : 'bg-[#DCEBBA] text-[#0C3830]'
+                      isActive ? 'bg-black/40 text-white' : `${accentBg} ${accentText}`
                     } ${isOpen ? '' : 'absolute top-1 right-1'}`}
                   >
                     {item.badge}
@@ -165,7 +218,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Sidebar Footer: Profile Info & Log Out */}
         <div className="p-4 border-t border-white/10 bg-black/20 space-y-3.5">
-          {/* User Profile Info - Clickable for Edit for Farmer */}
+          {/* User Profile Info */}
           <button
             onClick={isFarmer ? onOpenProfileModal : undefined}
             disabled={!isFarmer}
@@ -174,16 +227,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }`}
             title={isFarmer ? 'Click to edit profile & WhatsApp alert settings' : undefined}
           >
-            <div className="w-10 h-10 rounded-full bg-[#DCEBBA] text-[#0C3830] flex items-center justify-center font-black text-xs shadow-md shrink-0 border border-white/20 group-hover:scale-105 transition-transform">
-              {isFarmer ? 'RK' : 'SB'}
+            <div className={`w-10 h-10 rounded-full ${accentBg} ${accentText} flex items-center justify-center font-black text-xs shadow-md shrink-0 border border-white/20 group-hover:scale-105 transition-transform`}>
+              {userInitials}
             </div>
             {isOpen && (
               <div className="overflow-hidden flex-1">
-                <p className="text-xs font-extrabold text-white truncate leading-tight group-hover:text-[#DCEBBA] transition-colors">
-                  {isFarmer ? 'Rajesh Kadam' : 'Sahil Bhonsle'}
+                <p className="text-xs font-extrabold text-white truncate leading-tight group-hover:opacity-90 transition-opacity">
+                  {userName}
                 </p>
-                <p className="text-[10px] text-[#DCEBBA] font-semibold truncate mt-0.5">
-                  {isFarmer ? 'Edit Profile & Mobile #' : 'Cold Storage Owner'}
+                <p className={`text-[10px] ${iconAccent} font-semibold truncate mt-0.5`}>
+                  {userRoleLabel}
                 </p>
               </div>
             )}
@@ -195,7 +248,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-2xl bg-white/10 hover:bg-rose-500/20 hover:text-rose-200 text-white font-bold text-xs transition-all border border-white/15 shadow-xs cursor-pointer"
             title="Log Out to Portal Switcher"
           >
-            <LogOut size={16} className="text-[#DCEBBA]" />
+            <LogOut size={16} className={iconAccent} />
             {isOpen && <span>Log Out</span>}
           </button>
         </div>
@@ -203,4 +256,3 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </>
   );
 };
-

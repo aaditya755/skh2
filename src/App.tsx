@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
-import { Role, Language, HarvestBatch, StorageUnit, StorageZone, InventoryItem, StorageRequest, SystemAlert } from './types';
+import {
+  Role,
+  Language,
+  HarvestBatch,
+  StorageUnit,
+  StorageZone,
+  InventoryItem,
+  StorageRequest,
+  SystemAlert,
+  Shipment,
+  Vehicle,
+  DistrictMetric,
+  GovernmentFacilityAudit,
+} from './types';
 import {
   INITIAL_BATCHES,
   INITIAL_STORAGE_UNITS,
@@ -7,6 +20,11 @@ import {
   INITIAL_INVENTORY,
   INITIAL_REQUESTS,
   INITIAL_SYSTEM_ALERTS,
+  INITIAL_SHIPMENTS,
+  INITIAL_VEHICLES,
+  INITIAL_DISTRICT_METRICS,
+  INITIAL_FACILITY_AUDITS,
+  INITIAL_GOVERNMENT_ALERTS,
 } from './data/mockData';
 import { LandingRoleSwitch } from './components/LandingRoleSwitch';
 import { Header } from './components/Header';
@@ -20,6 +38,10 @@ import { StorageOwnerDashboard } from './components/Storage/StorageOwnerDashboar
 import { AddZoneModal } from './components/Storage/AddZoneModal';
 import { UserProfileModal } from './components/UserProfileModal';
 import { AgriCoolAiChatbotModal } from './components/AgriCoolAiChatbotModal';
+import { LogisticsTrackingScreen } from './components/Logistics/LogisticsTrackingScreen';
+import { FleetManagementScreen } from './components/Storage/FleetManagementScreen';
+import { GovernmentDashboard } from './components/Government/GovernmentDashboard';
+import { GovernmentAlertsScreen } from './components/Government/GovernmentAlertsScreen';
 
 export default function App() {
   const [role, setRole] = useState<Role>(null); // null shows landing screen
@@ -35,6 +57,11 @@ export default function App() {
   const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY);
   const [requests, setRequests] = useState<StorageRequest[]>(INITIAL_REQUESTS);
   const [alerts, setAlerts] = useState<SystemAlert[]>(INITIAL_SYSTEM_ALERTS);
+  const [shipments, setShipments] = useState<Shipment[]>(INITIAL_SHIPMENTS);
+  const [vehicles, setVehicles] = useState<Vehicle[]>(INITIAL_VEHICLES);
+  const [districtMetrics] = useState<DistrictMetric[]>(INITIAL_DISTRICT_METRICS);
+  const [facilityAudits] = useState<GovernmentFacilityAudit[]>(INITIAL_FACILITY_AUDITS);
+  const [governmentAlerts, setGovernmentAlerts] = useState<SystemAlert[]>(INITIAL_GOVERNMENT_ALERTS);
 
   // Modal Control States
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -46,16 +73,6 @@ export default function App() {
   const [isQualityGradingModalOpen, setIsQualityGradingModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isChatbotModalOpen, setIsChatbotModalOpen] = useState(false);
-
-  // User Profile State
-  const [userProfile, setUserProfile] = useState({
-    name: 'Rajesh Kadam',
-    phone: '+91 98230 41102',
-    location: 'Narayangaon, Pune, Maharashtra',
-    cropSpecialty: 'Tomatoes & Mangoes',
-    whatsappAlerts: true,
-    smsAlerts: true,
-  });
 
   // Handler: Save AI Quality Grade Result to active batch
   const handleQualityGraded = (commodity: string, grade: string, shelfLifeDays: number) => {
@@ -163,6 +180,27 @@ export default function App() {
     );
   };
 
+  // Handler: Update shipment route option
+  const handleUpdateRouteOption = (shipmentId: string, routeOptionId: string) => {
+    setShipments((prev) =>
+      prev.map((s) => (s.id === shipmentId ? { ...s, routeOptionId } : s))
+    );
+    const matched = shipments.find((s) => s.id === shipmentId);
+    if (matched) {
+      setAlerts((prev) => [
+        {
+          id: `ALT-${Date.now()}`,
+          title: 'Transit Route Optimization Active',
+          message: `Shipment ${shipmentId} (${matched.commodity}) rerouted with cold-chain corridor ${routeOptionId}.`,
+          severity: 'info',
+          timestamp: 'Just now',
+          type: 'info',
+        },
+        ...prev,
+      ]);
+    }
+  };
+
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     if (role === 'farmer') {
@@ -172,12 +210,28 @@ export default function App() {
     }
   };
 
+  // Filter shipments by active role
+  const roleFilteredShipments = shipments.filter((s) => {
+    if (role === 'farmer') {
+      return true; // Farmer tracks crop batch shipments
+    }
+    return (
+      s.destinationName.toLowerCase().includes('cold') ||
+      s.destinationName.toLowerCase().includes('storage') ||
+      s.destinationName.toLowerCase().includes('hub') ||
+      s.destinationName.toLowerCase().includes('terminal') ||
+      s.originName.toLowerCase().includes('cold') ||
+      s.originName.toLowerCase().includes('storage')
+    );
+  });
+
   // If no role selected, render landing page
   if (!role) {
     return <LandingRoleSwitch onSelectRole={(r) => setRole(r)} />;
   }
 
   const pendingRequestsCount = requests.filter((r) => r.status === 'pending').length;
+  const currentRoleAlerts = role === 'government' ? governmentAlerts : alerts;
 
   return (
     <div className="min-h-screen bg-[#FFFDF5] flex text-[#2A2A2A] font-sans">
@@ -195,7 +249,7 @@ export default function App() {
         }}
         onOpenProfileModal={() => setIsProfileModalOpen(true)}
         pendingRequestsCount={pendingRequestsCount}
-        criticalAlertsCount={alerts.filter((a) => !a.read).length}
+        criticalAlertsCount={currentRoleAlerts.filter((a) => !a.read).length}
       />
 
       {/* Main Content Area */}
@@ -208,15 +262,76 @@ export default function App() {
           searchQuery={searchQuery}
           onSearchChange={(q) => setSearchQuery(q)}
           toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-          alerts={alerts}
+          alerts={currentRoleAlerts}
           onOpenProfileModal={() => setIsProfileModalOpen(true)}
           onOpenChatbotModal={() => setIsChatbotModalOpen(true)}
         />
 
-        {/* Dynamic View based on Role (Spans full width without cluttered right panel) */}
+        {/* Dynamic View based on Role */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
           <div className="w-full space-y-6">
-            {role === 'farmer' ? (
+            {role === 'government' ? (
+              activeTab === 'alerts' ? (
+                <GovernmentAlertsScreen
+                  alerts={governmentAlerts}
+                  onBroadcastAdvisory={(msg, dist) => {
+                    setGovernmentAlerts((prev) => [
+                      {
+                        id: `GOV-ALT-${Date.now()}`,
+                        title: `Advisory Broadcast: ${dist}`,
+                        message: msg,
+                        severity: 'info',
+                        timestamp: 'Just now',
+                        type: 'confirmation',
+                      },
+                      ...prev,
+                    ]);
+                  }}
+                />
+              ) : activeTab === 'logistics' ? (
+                <FleetManagementScreen
+                  vehicles={vehicles}
+                  role={role}
+                  lang={lang}
+                />
+              ) : (
+                <GovernmentDashboard
+                  districtMetrics={districtMetrics}
+                  facilityAudits={facilityAudits}
+                  alerts={governmentAlerts}
+                  onIssueAdvisory={() => setActiveTab('alerts')}
+                />
+              )
+            ) : role === 'storage' ? (
+              activeTab === 'logistics' ? (
+                <FleetManagementScreen
+                  vehicles={vehicles}
+                  role={role}
+                  lang={lang}
+                />
+              ) : (
+                <StorageOwnerDashboard
+                  zones={storageZones}
+                  inventory={inventory}
+                  requests={requests}
+                  alerts={alerts}
+                  searchQuery={searchQuery}
+                  onOpenAddZoneModal={() => setIsAddZoneModalOpen(true)}
+                  onAcceptRequest={handleAcceptRequest}
+                  onRejectRequest={handleRejectRequest}
+                  onSimulateTelemetry={handleSimulateTelemetry}
+                  activeTab={activeTab}
+                />
+              )
+            ) : activeTab === 'logistics' ? (
+              <LogisticsTrackingScreen
+                shipments={roleFilteredShipments}
+                role={role}
+                lang={lang}
+                onUpdateRouteOption={handleUpdateRouteOption}
+                searchQuery={searchQuery}
+              />
+            ) : (
               <FarmerDashboard
                 lang={lang}
                 batches={batches}
@@ -236,19 +351,6 @@ export default function App() {
                 alerts={alerts}
                 onToggleAlertRead={handleToggleAlertRead}
                 onMarkAllAlertsRead={handleMarkAllAlertsRead}
-              />
-            ) : (
-              <StorageOwnerDashboard
-                zones={storageZones}
-                inventory={inventory}
-                requests={requests}
-                alerts={alerts}
-                searchQuery={searchQuery}
-                onOpenAddZoneModal={() => setIsAddZoneModalOpen(true)}
-                onAcceptRequest={handleAcceptRequest}
-                onRejectRequest={handleRejectRequest}
-                onSimulateTelemetry={handleSimulateTelemetry}
-                activeTab={activeTab}
               />
             )}
           </div>

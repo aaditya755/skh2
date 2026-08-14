@@ -1,4 +1,4 @@
-export type Role = 'farmer' | 'storage' | null;
+export type Role = 'farmer' | 'storage' | 'government' | null;
 export type Language = 'en' | 'hi' | 'mr';
 
 export type BatchStage = 0 | 1 | 2 | 3 | 4; // 0: Harvested, 1: In Transit, 2: Stored, 3: Dispatched, 4: Sold
@@ -139,6 +139,36 @@ export interface SystemAlert {
   type?: 'spoilage' | 'pickup' | 'confirmation' | 'breach' | 'info';
 }
 
+export interface RouteOption {
+  id: string;
+  label: string; // e.g. "Fastest", "Most Fuel-Efficient", "Avoids Highway Tolls"
+  distanceKm: number;
+  estimatedDurationMin: number;
+  estimatedFuelCost: number;
+  estimatedTollCost: number;
+  riskLevel: 'low' | 'medium' | 'high';
+  waypoints: string[];
+}
+
+export interface Shipment {
+  id: string;
+  batchId: string;
+  commodity: string;
+  quantityKg: number;
+  originName: string;
+  destinationName: string;
+  vehicleType: 'Refrigerated Truck' | 'Insulated Van' | 'Open Truck';
+  driverName: string;
+  driverPhone: string;
+  departureTimestamp: string;
+  estimatedArrivalTimestamp: string;
+  currentProgressPct: number; // 0-100
+  currentTempC: number;
+  targetTempC: number;
+  status: 'preparing' | 'in_transit' | 'delivered' | 'delayed' | 'temp_breach';
+  routeOptionId?: string;
+}
+
 export interface CropPreset {
   name: string;
   icon: string;
@@ -149,4 +179,48 @@ export interface CropPreset {
   category: 'Fruit' | 'Vegetable' | 'Grain' | 'Tuber';
   isEthyleneProducer?: boolean;
   ethyleneSensitive?: boolean;
+}
+
+export interface Vehicle {
+  id: string;
+  registrationNumber: string;
+  model: string;
+  type: 'Refrigerated Truck' | 'Insulated Van' | 'Small Reefer Tempo' | 'Heavy Cold-Carrier';
+  capacityKg: number;
+  driverName: string;
+  driverPhone: string;
+  currentLocation: string; // e.g. "Kopargaon Depot", "NH60 near Sinnar", "Ahmednagar Cold Storage", "En route to Nashik APMC"
+  status: 'available' | 'on_route' | 'maintenance';
+  currentTempC?: number;
+  targetTempC?: number;
+  assignedBatchId?: string;
+  destination?: string;
+  eta?: string;
+  fuelPct?: number;
+}
+
+export interface DistrictMetric {
+  district: string;
+  totalCapacityMT: number;
+  occupiedMT: number;
+  occupancyPct: number;
+  facilitiesCount: number;
+  spoilagePreventedPct: number;
+  lossPreventedValueLakhs: number;
+  activeBreaches: number;
+}
+
+export interface GovernmentFacilityAudit {
+  id: string;
+  facilityName: string;
+  district: string;
+  licenseNumber: string;
+  fssaiNumber: string;
+  totalCapacityTons: number;
+  utilizedCapacityTons: number;
+  complianceScorePct: number;
+  lastInspectionDate: string;
+  sensorReliabilityPct: number;
+  subsidyStatus: 'Disbursed' | 'Under Review' | 'Eligible';
+  status: 'Compliant' | 'Inspection Required' | 'Warning';
 }

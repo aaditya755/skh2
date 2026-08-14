@@ -21,6 +21,7 @@ export const translations: Record<Language, {
     zoneManagement: string;
     requests: string;
     analytics: string;
+    logistics: string;
     switchRole: string;
   };
   farmerAlertsTitle: string;
@@ -90,6 +91,7 @@ export const translations: Record<Language, {
       zoneManagement: "Storage Zones",
       requests: "Farmer Bookings",
       analytics: "Live Sensor Feed",
+      logistics: "Logistics & Fleet",
       switchRole: "Switch Role",
     },
     farmerAlertsTitle: "Spoilage Risk Alert",
@@ -159,6 +161,7 @@ export const translations: Record<Language, {
       zoneManagement: "स्टोरेज जोन व्यवस्थापन",
       requests: "किसान बुकिंग अनुरोध",
       analytics: "लाइव सेन्सर फीड",
+      logistics: "लॉजिस्टिक्स व वाहन ट्रैकिंग",
       switchRole: "भूमिका बदलें",
     },
     farmerAlertsTitle: "फसल शेल्फ-लाइफ एवं सुरक्षा चेतावनी",
@@ -228,6 +231,7 @@ export const translations: Record<Language, {
       zoneManagement: "स्टोरेज झोन व्यवस्थापन",
       requests: "शेतकरी बुकिंग अर्ज",
       analytics: "थेट सेन्सर फीड",
+      logistics: "लॉजिस्टिक्स व वाहतूक",
       switchRole: "भूमिका बदला",
     },
     farmerAlertsTitle: "पीक साठवणूक व सुरक्षा अलर्ट",

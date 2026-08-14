@@ -31,6 +31,17 @@ export const Header: React.FC<HeaderProps> = ({
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const t = translations[lang];
   const isFarmer = role === 'farmer';
+  const isGovernment = role === 'government';
+
+  let welcomeTitle = t.welcomeStorage;
+  let welcomeSubtitle = t.storageSubtitle;
+  if (isFarmer) {
+    welcomeTitle = t.welcomeFarmer;
+    welcomeSubtitle = t.farmerSubtitle;
+  } else if (isGovernment) {
+    welcomeTitle = 'Hey Dr. Anand,';
+    welcomeSubtitle = 'District Agri Office & Cold-Chain Governance Hub';
+  }
 
   return (
     <header className="sticky top-0 z-30 bg-[#F4F6F4]/90 backdrop-blur-md px-4 sm:px-8 py-3.5 border-b border-[#E2E9E2] flex items-center justify-between shadow-2xs transition-colors duration-300">
@@ -46,10 +57,10 @@ export const Header: React.FC<HeaderProps> = ({
 
         <div className="hidden sm:block">
           <h2 className="text-base sm:text-lg font-extrabold text-[#1A2D27] leading-tight tracking-tight">
-            {isFarmer ? t.welcomeFarmer : t.welcomeStorage}
+            {welcomeTitle}
           </h2>
           <p className="text-xs text-[#5C736A] font-semibold">
-            {isFarmer ? t.farmerSubtitle : t.storageSubtitle}
+            {welcomeSubtitle}
           </p>
         </div>
       </div>

@@ -13,13 +13,13 @@ interface ChatMessage {
 interface AgriCoolAiChatbotModalProps {
   isOpen: boolean;
   onClose: () => void;
-  lang: Language;
+  lang?: Language;
 }
 
 export const AgriCoolAiChatbotModal: React.FC<AgriCoolAiChatbotModalProps> = ({
   isOpen,
   onClose,
-  lang,
+  lang = 'en',
 }) => {
   if (!isOpen) return null;
 
