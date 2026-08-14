@@ -139,7 +139,7 @@ export const AlertsScreen: React.FC<AlertsScreenProps> = ({
         return {
           cardBg: read ? 'bg-amber-50/40 border-amber-200/70' : 'bg-amber-50/90 border-amber-300 shadow-xs',
           iconBg: 'bg-amber-100 text-amber-800',
-          badgeBg: 'bg-[#F5A623] text-white',
+          badgeBg: 'bg-[#5C736A] text-white',
           badgeText: lang === 'hi' ? 'चेतावनी' : lang === 'mr' ? 'इशारा' : 'Warning',
         };
       case 'info':

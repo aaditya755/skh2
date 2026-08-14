@@ -293,15 +293,16 @@ export default function App() {
       <AiQualityGradingModal
         isOpen={isQualityGradingModalOpen}
         onClose={() => setIsQualityGradingModalOpen(false)}
-        onGraded={handleQualityGraded}
+        onApplyGradeToBatch={(result, commodity) => handleQualityGraded(commodity, result.grade, result.shelfLifeColdStorageDays)}
+        lang={lang}
       />
 
       <UserProfileModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
-        profile={userProfile}
-        onSaveProfile={(updated) => setUserProfile(updated)}
         role={role}
+        lang={lang}
+        onLanguageChange={(l) => setLang(l)}
       />
 
       <AgriCoolAiChatbotModal

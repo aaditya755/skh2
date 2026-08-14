@@ -141,7 +141,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
             className="bg-[#0C3830] text-white px-6 py-3.5 rounded-full font-extrabold text-sm flex items-center justify-center gap-2 hover:bg-[#082822] transition-all shadow-md group"
           >
             <Plus size={18} className="group-hover:rotate-90 transition-transform" />
-            <span>{t.registerHarvest}</span>
+            <span>{t.nav.registerHarvest}</span>
           </button>
         </div>
       </div>
@@ -268,7 +268,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 urgentBatch.spoilageAlert.urgency === 'critical'
                   ? 'bg-[#E15554] text-white shadow-md'
                   : urgentBatch.spoilageAlert.urgency === 'warning'
-                  ? 'bg-[#F5A623] text-white'
+                  ? 'bg-[#5C736A] text-white'
                   : 'bg-[#BBD38B] text-[#2A2A2A]'
               }`}
             >
@@ -323,7 +323,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                   onClick={onOpenRegisterModal}
                   className="px-4 py-2 bg-[#777D71] text-white rounded-xl text-xs font-bold"
                 >
-                  {t.registerHarvest}
+                  {t.nav.registerHarvest}
                 </button>
               </div>
             ) : (

@@ -412,7 +412,7 @@ export const AiQualityGradingModal: React.FC<AiQualityGradingModalProps> = ({
                       onApplyGradeToBatch(activeResult, selectedPreset.crop);
                       onClose();
                     }}
-                    className="flex-1 py-3 bg-[#777D71] text-white rounded-xl text-xs font-bold hover:bg-[#5f645a] flex items-center justify-center gap-2 shadow-md"
+                    className="flex-1 py-3 bg-[#777D71] text-white rounded-xl text-xs font-bold hover:bg-[#5C736A] flex items-center justify-center gap-2 shadow-md"
                   >
                     <ShieldCheck size={18} />
                     <span>Attach Grade to Batch</span>

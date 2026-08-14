@@ -174,7 +174,7 @@ export const StorageBookingModal: React.FC<StorageBookingModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex-1 py-3 bg-[#777D71] text-white rounded-xl text-sm font-bold hover:bg-[#5f645a] flex items-center justify-center gap-2 shadow-md"
+              className="flex-1 py-3 bg-[#777D71] text-white rounded-xl text-sm font-bold hover:bg-[#5C736A] flex items-center justify-center gap-2 shadow-md"
             >
               <CheckCircle2 size={18} />
               Submit Request

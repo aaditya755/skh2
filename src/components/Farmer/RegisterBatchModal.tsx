@@ -178,7 +178,7 @@ export const RegisterBatchModal: React.FC<RegisterBatchModalProps> = ({
                     ? 'bg-rose-100 text-rose-800 border border-rose-300 animate-pulse'
                     : showVoiceConfirmed
                     ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                    : 'bg-[#DCEBBA] text-[#0C3830] hover:bg-[#cbe09d] border border-[#0C3830]/20 shadow-2xs'
+                    : 'bg-[#DCEBBA] text-[#0C3830] hover:bg-[#BBD38B] border border-[#0C3830]/20 shadow-2xs'
                 }`}
               >
                 <Mic size={13} className={isListening ? 'animate-bounce text-rose-600' : 'text-[#0C3830]'} />

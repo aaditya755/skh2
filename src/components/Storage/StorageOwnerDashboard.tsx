@@ -201,7 +201,7 @@ export const StorageOwnerDashboard: React.FC<StorageOwnerDashboardProps> = ({
                         </span>
                         <h4 className="font-extrabold text-base text-[#2A2A2A]">{z.name}</h4>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">Recommended for: {(z.assignedCrops || z.recommendedFor || []).join(', ') || 'General Produce'}</p>
+                      <p className="text-xs text-gray-500 mt-1">Recommended for: {(z.assignedCrops || []).join(', ') || 'General Produce'}</p>
                     </div>
 
                     <span

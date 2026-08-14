@@ -272,7 +272,7 @@ export const BatchDetailsModal: React.FC<BatchDetailsModalProps> = ({
           <div className="pt-2">
             <button
               onClick={onClose}
-              className="w-full py-3 bg-[#777D71] text-white rounded-xl text-xs font-bold hover:bg-[#5f645a] transition-all"
+              className="w-full py-3 bg-[#777D71] text-white rounded-xl text-xs font-bold hover:bg-[#5C736A] transition-all"
             >
               Close Details
             </button>

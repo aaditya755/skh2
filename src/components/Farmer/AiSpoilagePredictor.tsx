@@ -55,9 +55,9 @@ export const AiSpoilagePredictor: React.FC<AiSpoilagePredictorProps> = ({ lang }
     {
       sender: 'ai',
       text: isHi
-        ? 'नमस्ते! फसल कटाई, शेल्फ-लाइफ या कोल्ड स्टोरेज तापमान के बारे में मुझसे प्रश्न पूछें।'
+        ? 'नमस्ते! मैं आपका एआई फसल सलाहकार हूँ। आप मुझसे फसल कटाई, शेल्फ-लाइफ, शीतगृह तापमान या इथिलीन गैस अलगाव के बारे में कोई भी प्रश्न पूछ सकते हैं।'
         : isMr
-        ? 'नमस्कार! पीक कापणी, साठवण काळ किंवा कोल्ड स्टोरेज तापमानाबद्दल मला प्रश्न विचारा.'
+        ? 'नमस्कार! मी तुमचा एआय पीक सल्लागार आहे. पीक काढणी, साठवण कालावधी, शीतगृह तापमान किंवा इथिलिन गॅस अलगीकरणाविषयी मला कोणताही प्रश्न विचारा.'
         : 'Hello! Ask me any questions regarding crop preservation, cold storage temperature, or ethylene segregation.',
     },
   ]);
@@ -88,16 +88,16 @@ export const AiSpoilagePredictor: React.FC<AiSpoilagePredictorProps> = ({ lang }
 
       if (riskLevel === 'high') {
         adviceEn = `High ambient temperature (${ambientTemp}°C) accelerates spoilage! Move ${crop.name} to cold storage within ${Math.min(4, Math.round(totalHours * 0.2))} hours to preserve texture and market value.`;
-        adviceHi = `उच्च तापमान (${ambientTemp}°C) से ${crop.name} जल्दी खराब हो सकती है! फसल की गुणवत्ता बनाए रखने के लिए ${Math.min(4, Math.round(totalHours * 0.2))} घंटे के भीतर कोल्ड स्टोरेज में ले जाएं।`;
-        adviceMr = `वाढलेल्या तापमानामुळे (${ambientTemp}°C) ${crop.name} लवकर खराब होण्याचा धोका आहे. पुढील ${Math.min(4, Math.round(totalHours * 0.2))} तासांत कोल्ड स्टोरेजमध्ये हलवा.`;
+        adviceHi = `परिवेश का उच्च तापमान (${ambientTemp}°C) फसल को तेजी से खराब कर सकता है! ${crop.name} की ताज़गी और बाजार मूल्य बनाए रखने के लिए इसे ${Math.min(4, Math.round(totalHours * 0.2))} घंटे के भीतर कोल्ड स्टोरेज में सुरक्षित करें।`;
+        adviceMr = `परिसरातील जास्त तापमानामुळे (${ambientTemp}°C) शेतमाल लवकर मऊ पडून खराब होऊ शकतो. ${crop.name} चा दर्जा व बाजारभाव टिकवण्यासाठी पुढील ${Math.min(4, Math.round(totalHours * 0.2))} तासांच्या आत शीतगृहात हलवा.`;
       } else if (riskLevel === 'medium') {
         adviceEn = `Moderate risk. Produce can remain at current condition for ~${Math.round(totalHours / 24)} days, but precooling within 12 hours is recommended for long storage.`;
-        adviceHi = `मध्यम जोखिम। फसल ~${Math.round(totalHours / 24)} दिनों तक ठीक रह सकती है, लेकिन लंबे समय तक स्टोर करने के लिए 12 घंटे के भीतर प्री-कूलिंग करें।`;
-        adviceMr = `मध्यम धोका. पीक पुढील ~${Math.round(totalHours / 24)} दिवस टिकू शकते. चांगल्या गुणवत्तेसाठी 12 तासांत कोल्ड स्टोरेज वापरणे योग्य ठरेल.`;
+        adviceHi = `मध्यम जोखिम। मौजूदा परिस्थितियों में फसल ~${Math.round(totalHours / 24)} दिन तक ठीक रह सकती है, परंतु लंबी शेल्फ-लाइफ के लिए 12 घंटे के भीतर प्री-कूलिंग और स्टोरेज कराने की सलाह दी जाती है।`;
+        adviceMr = `मध्यम धोका. चालू वातावरणात पीक ~${Math.round(totalHours / 24)} दिवस टिकू शकते, परंतु दीर्घकाळ सुरक्षिततेसाठी 12 तासांच्या आत प्री-कूलिंग व साठवणूक करणे फायदेशीर ठरेल.`;
       } else {
         adviceEn = `Optimal condition! Current environment is close to target. Estimated safe window: ${Math.round(totalHours / 24)} days.`;
-        adviceHi = `उत्तम स्थिति! मौजूदा वातावरण अनुकूल है। सुरक्षित समय: ${Math.round(totalHours / 24)} दिन।`;
-        adviceMr = `उत्कृष्ट स्थिती! हवामान अनुकूल आहे. सुरक्षित साठवण काळ: ${Math.round(totalHours / 24)} दिवस.`;
+        adviceHi = `उत्तम एवं अनुकूल स्थिति! परिवेशीय तापमान फसल के अनुकूल है। सुरक्षित शेल्फ-लाइफ विंडो: ${Math.round(totalHours / 24)} दिन।`;
+        adviceMr = `उत्कृष्ट व अनुकूल स्थिती! सध्याचे तापमान पिकासाठी योग्य आहे. सुरक्षित साठवणूक कालावधी: ${Math.round(totalHours / 24)} दिवस.`;
       }
 
       setPrediction({
@@ -131,21 +131,21 @@ export const AiSpoilagePredictor: React.FC<AiSpoilagePredictorProps> = ({ lang }
       const queryLower = text.toLowerCase();
       if (queryLower.includes('tomato') || queryLower.includes('apple') || queryLower.includes('इथिलीन')) {
         resp = isHi
-          ? 'टमाटर और सेब दोनों इथिलीन गैस छोड़ते हैं। इन्हें एक ही कोल्ड रूम में साथ न रखें।'
+          ? 'टमाटर और सेब दोनों उच्च इथिलीन गैस उत्सर्जक हैं। इन्हें एक ही कोल्ड स्टोरेज चेंबर में न रखें, अन्यथा फसल समय से पहले पककर सड़ सकती है।'
           : isMr
-          ? 'टोमॅटो आणि सफरचंद दोन्ही इथिलिन वायू सोडतात. त्यांना एकाच कोल्ड रूममध्ये एकत्र ठेवू नका.'
+          ? 'टोमॅटो आणि सफरचंद दोन्हीही भरपूर इथिलिन वायू सोडतात. त्यांना एकाच शीतगृह चेंबरमध्ये एकत्र ठेवू नका, अन्यथा फळे मुदतीपूर्वी पिकून खराब होतील.'
           : 'Tomatoes and Apples both emit ethylene gas. Keep them separated in distinct storage zones.';
       } else if (queryLower.includes('grape') || queryLower.includes('द्राक्ष') || queryLower.includes('अंगूर')) {
         resp = isHi
-          ? 'अंगूर के लिए 0°C से 1°C तापमान और 92% आर्द्रता रखें। 45 दिन सुरक्षित रहेंगे।'
+          ? 'अंगूर के लिए आदर्श तापमान 0°C से 1°C और आर्द्रता 90–95% बनाए रखें। इस तापमान पर अंगूर 45 दिनों तक सुरक्षित व ताज़ा रहते हैं।'
           : isMr
-          ? 'द्राक्षांसाठी 0°C ते 1°C तापमान आणि 92% दमटपणा ठेवा. 45 दिवस टिकतील.'
+          ? 'द्राक्षांसाठी आदर्श तापमान 0°C ते 1°C आणि दमटपणा 90–95% ठेवावा. या तापमानात द्राक्षे 45 दिवसांपर्यंत पूर्णपणे ताजी राहतात.'
           : 'Keep Grapes at 0–1°C with 90–95% Humidity to preserve stems for up to 45 days.';
       } else {
         resp = isHi
-          ? 'कटाई के 4 घंटे में प्री-कूलिंग करने से फसल 3x अधिक समय तक ताज़ा रहती है।'
+          ? 'कटाई के 4 घंटे के भीतर प्री-कूलिंग करने से फसल की शेल्फ-लाइफ 3 गुना तक बढ़ जाती है और वजन में नमी की कमी नहीं होती।'
           : isMr
-          ? 'कापणीनंतर 4 तासांत प्री-कूलिंग केल्यास पीक 3 पट जास्त टिकते.'
+          ? 'काढणीनंतर 4 तासांच्या आत प्री-कूलिंग केल्यास शेतमालाची टिकवण क्षमता 3 पट वाढते आणि मालाचे वजन टिकून राहते.'
           : 'Precooling crops within 4 hours of harvest triples safe storage shelf-life.';
       }
       setChatMessages((prev) => [...prev, { sender: 'ai', text: resp }]);
@@ -433,7 +433,15 @@ export const AiSpoilagePredictor: React.FC<AiSpoilagePredictorProps> = ({ lang }
                 </h4>
                 <p className="text-xs font-semibold mt-1 leading-relaxed">
                   {isCompatible
-                    ? `${cropA.name} and ${cropB.name} do not clash in ethylene gas emissions. Safe to share Cold Storage Zone.`
+                    ? isHi
+                      ? `${cropA.name} और ${cropB.name} के बीच इथिलीन गैस का कोई टकराव नहीं है। इन्हें एक ही कोल्ड स्टोरेज ज़ोन में सुरक्षित रूप से रखा जा सकता है।`
+                      : isMr
+                      ? `${cropA.name} आणि ${cropB.name} मध्ये इथिलिन वायूचा कोणताही विपरित परिणाम होत नाही. यांना एकाच शीतगृह विभागात सुरक्षित साठवता येईल.`
+                      : `${cropA.name} and ${cropB.name} do not clash in ethylene gas emissions. Safe to share Cold Storage Zone.`
+                    : isHi
+                    ? `चेतावनी: ${cropA.name} अधिक मात्रा में इथिलीन गैस उत्सर्जित करता है, जिससे ${cropB.name} समय से पहले पककर सड़ सकता है। इन्हें अलग-अलग चेंबर में रखें।`
+                    : isMr
+                    ? `इशारा: ${cropA.name} मधून जास्त प्रमाणात इथिलिन वायू उत्सर्जित होतो, ज्यामुळे ${cropB.name} मुदतीपूर्वी पिकून मऊ पडू शकते. यांना वेगवेगळ्या चेंबरमध्ये ठेवा.`
                     : `${cropA.name} releases high ethylene gas which accelerates ripening/softening in ${cropB.name}. Store in separate cold chambers.`}
                 </p>
               </div>

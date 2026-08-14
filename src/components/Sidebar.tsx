@@ -70,6 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'sensors', label: t.nav.analytics, icon: Thermometer },
     { id: 'zones', label: t.nav.zoneManagement, icon: Layers },
     { id: 'requests', label: t.nav.requests, icon: Inbox, badge: pendingRequestsCount },
+    { id: 'alerts', label: t.nav.alerts, icon: Bell, badge: criticalAlertsCount },
     { id: 'inventory', label: t.nav.inventory, icon: Database },
   ];
 
