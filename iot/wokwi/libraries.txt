@@ -1,0 +1,3 @@
+﻿DHT sensor library
+ESP32Servo
+HX711 Arduino Library
